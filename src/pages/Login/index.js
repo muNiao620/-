@@ -2,12 +2,24 @@ import {Card ,Form, Input, Button, Checkbox} from 'antd'
 import logo from '../../assets/logo.png'
 import './index.scss'
 function Login(){
+  const onFinish = (values) => {
+    console.log('Success:', values);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
   return (
     <div className='login'>
       <Card className='login-container'>
         <img className='login-logo' src={logo} alt=''/>
         {/* 子项用到的触发事件，需要在Form中声明 */}
-        <Form initialValues={{ remember: true,password: 123456 }} validateTrigger={['onBlur','onChange']}>
+        <Form 
+          initialValues={{ remember: true,password: 123456 }} 
+          validateTrigger={['onBlur','onChange']}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+        >
           <Form.Item
             // label="phone"
             name="phone"
