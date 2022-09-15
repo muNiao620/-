@@ -6,12 +6,26 @@ function Login(){
     <div className='login'>
       <Card className='login-container'>
         <img className='login-logo' src={logo} alt=''/>
-        <Form initialValues={{ remember: true }}>
-          <Form.Item>
+        {/* 子项用到的触发事件，需要在Form中声明 */}
+        <Form initialValues={{ remember: true,password: 123456 }} validateTrigger={['onBlur','onChange']}>
+          <Form.Item
+            // label="phone"
+            name="phone"
+            rules={[
+              { required: true, message: '请输入手机号' },
+              {pattern:/^1[3-9]\d{9}$/,message:'请输入正确手机号',validateTrigger:'onBlur'}
+            ]}
+          >
             <Input size='large' placeholder='请输入手机号' />
           </Form.Item>
-          <Form.Item>
-            <Input size='large' placeholder='请输入验证码' />
+          <Form.Item
+            name="password"
+            rules={[
+              { required: true, message: '请输入密码' },
+              {len:6 , message:'请输入6位密码',validateTrigger:'onBlur'}
+            ]}
+          >
+            <Input size='large' placeholder='请输入密码' />
           </Form.Item>
           <Form.Item name="remember" valuePropName="checked">
             <Checkbox className='login-checkbox-label'>
