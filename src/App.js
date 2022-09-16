@@ -3,6 +3,10 @@ import Login from './pages/Login';
 import Layout from './pages/Layout';
 import { AuthComponent } from './components/AuthComponent'
 import './App.css'
+import Publish from './pages/Publish';
+import Article from './pages/Article';
+import Home from './pages/Home';
+
 function App() {
   return (
     //路由配置
@@ -16,7 +20,12 @@ function App() {
             <AuthComponent>
               <Layout />
             </AuthComponent>
-          }></Route>
+          }>
+            {/* index表示默认选项路由 */}
+            <Route index element={< Home/>}></Route>
+            <Route path='Article' element={< Article/>}></Route>
+            <Route path='Publish' element={< Publish/>}></Route>
+          </Route>
           <Route path='/Login' element={<Login />}></Route>
         </Routes>
       </div>
