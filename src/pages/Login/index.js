@@ -1,15 +1,19 @@
-import {Card ,Form, Input, Button, Checkbox} from 'antd'
+import {Card ,Form, Input, Button, Checkbox,message} from 'antd'
 import logo from '../../assets/logo.png'
 import './index.scss'
 import { useStore } from '../../store'
+import { useNavigate } from 'react-router-dom'
 function Login(){
   const { loginStore } = useStore()
-  const onFinish = (values) => {
+  const navigate = useNavigate()
+  const onFinish = async (values) => {
     console.log('Success:', values);
-    loginStore.getToken({
-      mobile:values.username,
-      code:values.password
-    })
+    const { mobile, code } = values
+    await loginStore.getToken({ mobile, code })
+    // 跳转首页
+    navigate('/', { replace: true })
+    // 提示用户
+    message.success('登录成功')
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -28,7 +32,7 @@ function Login(){
         >
           <Form.Item
             // label="phone"
-            name="username"
+            name="mobile"
             rules={[
               { required: true, message: '请输入手机号' },
               {pattern:/^1[3-9]\d{9}$/,message:'请输入正确手机号',validateTrigger:'onBlur'}
@@ -37,7 +41,7 @@ function Login(){
             <Input size='large' placeholder='请输入手机号' />
           </Form.Item>
           <Form.Item
-            name="password"
+            name="code"
             rules={[
               { required: true, message: '请输入密码' },
               {len:6 , message:'请输入6位密码',validateTrigger:'onBlur'}
