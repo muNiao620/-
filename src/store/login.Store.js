@@ -17,6 +17,11 @@ class LoginStore {
     //存入ls
     setToken(this.token)
   }
+  // 退出登录
+  loginOut = () => {
+    this.token = ''
+    removeToken()
+  }
 }
 
 export default LoginStore

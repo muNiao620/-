@@ -15,13 +15,19 @@ const { Header, Sider } = Layout
 
 const GeekLayout = () => {
   const { pathname } = useLocation()
-  const { userStore } = useStore()
+  const { userStore,loginStore } = useStore()
 
   // 初始化完成后只执行一次
   useEffect(() => {
     userStore.getUserInfo()
   }, [userStore])
-
+  //确定退出
+  const navigate = useNavigate()
+  const onConfirm = () => {
+    // 退出登录 删除token 跳回到登录
+    loginStore.loginOut()
+    navigate('/login')
+  }
   return (
     <Layout>
       {/* 头部 */}
@@ -30,7 +36,11 @@ const GeekLayout = () => {
         <div className="user-info">
           <span className="user-name">{userStore.userInfo.name}</span>
           <span className="user-logout">
-            <Popconfirm title="是否确认退出？" okText="退出" cancelText="取消">
+            <Popconfirm 
+              onConfirm={onConfirm}
+              title="是否确认退出？" 
+              okText="退出" 
+              cancelText="取消">
               <LogoutOutlined /> 退出
             </Popconfirm>
           </span>
