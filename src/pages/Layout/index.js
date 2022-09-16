@@ -11,6 +11,7 @@ import './index.scss'
 const { Header, Sider } = Layout
 
 const GeekLayout = () => {
+  const { pathname } = useLocation()
   return (
     <Layout>
       {/* 头部 */}
@@ -28,21 +29,28 @@ const GeekLayout = () => {
       <Layout>
         {/* 左侧导航整体结构是sider */}
         <Sider width={200} className="site-layout-background">
+          {/* 高亮原理：defaultSelectedKeys === item key */}
+          {/* 获取当前激活的path路径？ */}
+          {/* 
+             defaultSelectedKeys: 初始化渲染的时候生效一次
+             selectedKeys: 每次有值更新时都会重新渲染视图
+          */}
           {/* 左侧菜单标签是menu */}
           <Menu
             mode="inline"
             theme="dark"
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={pathname}
+            selectedKeys={pathname}
             style={{ height: '100%', borderRight: 0 }}
           >
-            <Menu.Item icon={<HomeOutlined />} key="1">
-              数据概览
+            <Menu.Item icon={<HomeOutlined />} key="/">
+              <Link to='/'>数据概览</Link>
             </Menu.Item>
-            <Menu.Item icon={<DiffOutlined />} key="2">
-              内容管理
+            <Menu.Item icon={<DiffOutlined />} key="/article">
+              <Link to='/article'>内容管理</Link>
             </Menu.Item>
-            <Menu.Item icon={<EditOutlined />} key="3">
-              发布文章
+            <Menu.Item icon={<EditOutlined />} key="/publish">
+              <Link to='/publish'>发布文章</Link>
             </Menu.Item>
           </Menu>
         </Sider>
