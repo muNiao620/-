@@ -2,7 +2,7 @@
 import { makeAutoObservable } from 'mobx'
 import { http, setToken, getToken, removeToken } from '../utils'
 class LoginStore {
-  token = ''
+  token = getToken() || ''
   constructor (){
     makeAutoObservable(this)
     //响应式
@@ -13,7 +13,9 @@ class LoginStore {
       mobile, code
     })
     //存入token
-    this.token = res.data
+    this.token = res.data.token
+    //存入ls
+    setToken(this.token)
   }
 }
 
