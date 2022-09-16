@@ -1,9 +1,15 @@
 import {Card ,Form, Input, Button, Checkbox} from 'antd'
 import logo from '../../assets/logo.png'
 import './index.scss'
+import { useStore } from '../../store'
 function Login(){
+  const { loginStore } = useStore()
   const onFinish = (values) => {
     console.log('Success:', values);
+    loginStore.getToken({
+      mobile:values.username,
+      code:values.password
+    })
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -22,7 +28,7 @@ function Login(){
         >
           <Form.Item
             // label="phone"
-            name="phone"
+            name="username"
             rules={[
               { required: true, message: '请输入手机号' },
               {pattern:/^1[3-9]\d{9}$/,message:'请输入正确手机号',validateTrigger:'onBlur'}
